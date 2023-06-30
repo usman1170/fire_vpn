@@ -1,0 +1,1 @@
+const homeroute = "/home/";
