@@ -8,7 +8,9 @@ import 'screens/home_screen.dart';
 late Size mq;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  // for full screen of splash screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  // to set oreantations of device
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
       .then((value) {
@@ -16,14 +18,9 @@ void main() {
   });
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
