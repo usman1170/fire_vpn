@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:vpn_basic_project/routes/routes.dart';
 import 'package:vpn_basic_project/screens/splash.dart';
 import 'screens/home_screen.dart';

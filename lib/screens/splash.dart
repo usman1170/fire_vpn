@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 3), () {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       Navigator.of(context)
           .pushNamedAndRemoveUntil(homeroute, (route) => false);
@@ -25,38 +25,41 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 130,
-              width: 130,
-              decoration: BoxDecoration(
-                border: Border.all(color: Color.fromARGB(255, 254, 168, 38)),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Container(
-                  height: 80,
-                  width: 80,
-                  child: Image.asset("assets/icon/playstore.png"),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 40),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 130,
+                width: 130,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color.fromARGB(255, 254, 168, 38)),
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Container(
+                    height: 80,
+                    width: 80,
+                    child: Image.asset("assets/icon/playstore.png"),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(
-              "Fire VPN",
-              style: TextStyle(
-                color: Colors.orange.shade400,
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-                letterSpacing: .5,
+              SizedBox(
+                height: 16,
               ),
-            )
-          ],
+              Text(
+                "Fire VPN",
+                style: TextStyle(
+                  color: Colors.orange.shade400,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: .5,
+                ),
+              )
+            ],
+          ),
         ),
       ),
       bottomSheet: Container(
