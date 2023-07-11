@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:csv/csv.dart';
 import 'package:http/http.dart' as http;
 import 'package:vpn_basic_project/models/vpn_model.dart';
@@ -25,12 +23,10 @@ class Apis {
           }
           vpnList.add(VPN.fromJson(jsonData));
         }
-        // jsonData.addAll({header[i]: listofValues[1][i]});
       }
     } catch (e) {
       log("Error is = $e");
     }
-    // log("${vpnList.length}");
     vpnList.shuffle();
     return vpnList;
   }

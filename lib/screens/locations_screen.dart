@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vpn_basic_project/controllers/location_controller.dart';
 import 'package:vpn_basic_project/main.dart';
-import 'package:vpn_basic_project/services/apis.dart';
 import 'package:vpn_basic_project/utils/vpncard.dart';
 
 class LocationsScreen extends StatefulWidget {

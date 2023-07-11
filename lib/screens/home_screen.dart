@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -14,7 +12,6 @@ import 'package:vpn_basic_project/utils/countdown.dart';
 import 'package:vpn_basic_project/utils/home_widgets.dart';
 
 import '../models/vpn_config.dart';
-import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
 
 class HomeScreen extends StatefulWidget {
