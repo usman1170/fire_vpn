@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 import 'package:vpn_basic_project/routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -32,32 +33,46 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 130,
-                width: 130,
+                height: 150,
+                width: 150,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color.fromARGB(255, 254, 168, 38)),
+                  border: Border.all(color: Colors.orange.shade600),
                   shape: BoxShape.circle,
                 ),
                 child: Center(
                   child: Container(
-                    height: 80,
-                    width: 80,
-                    child: Image.asset("assets/icon/playstore.png"),
+                    height: 100,
+                    width: 100,
+                    child: LottieBuilder.asset(
+                      "assets/lottie/fire.json",
+                      frameRate: FrameRate.composition,
+                    ),
                   ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Fire VPN",
+                style: TextStyle(
+                  color: Colors.orange.shade800,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: .5,
                 ),
               ),
               SizedBox(
                 height: 16,
               ),
-              Text(
-                "Fire VPN",
-                style: TextStyle(
-                  color: Colors.orange.shade400,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: .5,
+              Container(
+                height: 90,
+                width: 90,
+                child: LottieBuilder.asset(
+                  "assets/lottie/loading3.json",
+                  frameRate: FrameRate.composition,
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -73,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Text(
             "Powered by Usman Ghani",
             style: TextStyle(
-              color: Colors.orange.shade600,
+              color: Colors.orange.shade800,
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
