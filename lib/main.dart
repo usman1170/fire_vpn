@@ -24,15 +24,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Fire Vpn',
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
       debugShowCheckedModeBanner: false,
-      routes: {
-        homeroute: (context) => HomeScreen(),
-      },
+      routes: {homeroute: (context) => HomeScreen()},
       home: SplashScreen(),
     );
   }

@@ -23,11 +23,11 @@ class VPN {
   VPN.fromJson(Map<String, dynamic> json) {
     hostname = json['HostName'] ?? "";
     ip = json['IP'] ?? "";
-    ping = json['Ping'] ?? "";
-    speed = json['Speed'] ?? "";
+    ping = json['Ping'] ?? 0;
+    speed = json['Speed'] ?? 0;
     countrylong = json['CountryLong'] ?? "";
     countryshort = json['CountryShort'] ?? "";
-    numvpnsessions = json['NumVpnSessions'] ?? "";
+    numvpnsessions = json['NumVpnSessions'] ?? 0;
     message = json['Message'] ?? "";
     openvpnconfigdatabase64 = json['OpenVPN_ConfigData_Base64'] ?? "";
   }

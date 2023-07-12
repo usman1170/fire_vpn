@@ -5,30 +5,16 @@ import 'package:vpn_basic_project/controllers/location_controller.dart';
 import 'package:vpn_basic_project/main.dart';
 import 'package:vpn_basic_project/utils/vpncard.dart';
 
-class LocationsScreen extends StatefulWidget {
-  const LocationsScreen({super.key});
+class LocationsScreen extends StatelessWidget {
+  LocationsScreen({super.key});
 
-  @override
-  State<LocationsScreen> createState() => _LocationsScreenState();
-}
-
-class _LocationsScreenState extends State<LocationsScreen> {
   final _controller = LocationController();
-  @override
-  void initState() {
-    _controller.getVpnData();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
+
+    _controller.getVpnData();
     return Obx(
       () => Scaffold(
         body: Column(
@@ -125,6 +111,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
           },
         ),
       );
+
   _noVpn() => Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -143,6 +130,7 @@ class _LocationsScreenState extends State<LocationsScreen> {
           ],
         ),
       );
+
   _loadingAnimation() => Container(
         width: double.infinity,
         height: double.infinity,

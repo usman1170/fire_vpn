@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:vpn_basic_project/controllers/home_controller.dart';
 import 'package:vpn_basic_project/models/vpn_model.dart';
 
 class VPNCard extends StatelessWidget {
@@ -8,11 +10,15 @@ class VPNCard extends StatelessWidget {
   final VPN vpn;
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<HomeController>();
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          controller.vpn.value = vpn;
+          Get.back();
+        },
         borderRadius: BorderRadius.circular(20),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

@@ -12,6 +12,7 @@ import 'package:vpn_basic_project/utils/countdown.dart';
 import 'package:vpn_basic_project/utils/home_widgets.dart';
 
 import '../models/vpn_config.dart';
+import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,50 +21,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _controller = HomeController();
-  List<VpnConfig> _listVpn = [];
-  VpnConfig? _selectedVpn;
-  bool isDark = false;
+  final _controller = Get.put(HomeController());
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    mq = MediaQuery.of(context).size;
 
     ///Add listener to update vpn state
     VpnEngine.vpnStageSnapshot().listen((event) {
       setState(() => _controller.vpnState.value = event);
     });
-
-    initVpn();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void initVpn() async {
-    //sample vpn config file (you can get more from https://www.vpngate.net/)
-    _listVpn.add(VpnConfig(
-        config: await rootBundle.loadString('assets/vpn/japan.ovpn'),
-        country: 'Japan',
-        username: 'vpn',
-        password: 'vpn'));
-
-    _listVpn.add(VpnConfig(
-        config: await rootBundle.loadString('assets/vpn/thailand.ovpn'),
-        country: 'Thailand',
-        username: 'vpn',
-        password: 'vpn'));
-
-    SchedulerBinding.instance.addPostFrameCallback(
-        (t) => setState(() => _selectedVpn = _listVpn.first));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    mq = MediaQuery.of(context).size;
     return Obx(
       () => Scaffold(
           backgroundColor: Colors.grey.shade100,
@@ -74,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: mq.height * .45,
               width: mq.width,
               decoration: BoxDecoration(
-                color: isDark ? Colors.black87 : Colors.orange.shade400,
+                color: Colors.orange.shade400,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(170),
                   bottomRight: Radius.circular(170),
@@ -195,10 +162,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      HomeWidgets(
+                      UpperWidgets(
                         size: 40,
                         title: "Server",
-                        subtitle: "USA",
+                        subtitle: _controller.vpn.value!.countrylong.isEmpty
+                            ? "Country"
+                            : _controller.vpn.value!.countrylong,
                         icon: Icon(
                           Icons.vpn_lock_rounded,
                           color: Colors.red,
@@ -206,10 +175,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         iconColor: Colors.orange.shade400.withOpacity(.4),
                       ),
-                      HomeWidgets(
+                      UpperWidgets(
                         size: 40,
                         title: "PING",
-                        subtitle: "10 ms",
+                        subtitle: _controller.vpn.value!.ping == null
+                            ? "Country"
+                            : "${_controller.vpn.value!.ping} ms",
                         icon: Icon(
                           Icons.equalizer_rounded,
                           color: Colors.white,
@@ -221,32 +192,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HomeWidgets(
-                        size: 32,
-                        title: "Downloading",
-                        subtitle: "8 Mbps",
-                        icon: Icon(
-                          Icons.arrow_downward,
-                          color: Colors.white,
-                          size: 22,
+                  StreamBuilder<VpnStatus?>(
+                    initialData: VpnStatus(),
+                    stream: VpnEngine.vpnStatusSnapshot(),
+                    builder: (context, snapshot) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        LowerWidgets(
+                          size: 30,
+                          title: "Downloading",
+                          subtitle: "${snapshot.data?.byteIn ?? "0.0 Mbps"}",
+                          icon: Icon(
+                            Icons.arrow_downward,
+                            color: Colors.white,
+                            size: 22,
+                          ),
+                          iconColor: Color.fromARGB(255, 91, 190, 94),
                         ),
-                        iconColor: Color.fromARGB(255, 91, 190, 94),
-                      ),
-                      HomeWidgets(
-                        size: 32,
-                        title: "Uploading",
-                        subtitle: "5 Mbps",
-                        icon: Icon(
-                          Icons.arrow_upward,
-                          color: Colors.white,
-                          size: 22,
+                        LowerWidgets(
+                          size: 30,
+                          title: "Uploading",
+                          subtitle: "${snapshot.data?.byteOut ?? "0.0 Mbps"}",
+                          icon: Icon(
+                            Icons.arrow_upward,
+                            color: Colors.white,
+                            size: 22,
+                          ),
+                          iconColor: Color.fromARGB(255, 237, 98, 96),
                         ),
-                        iconColor: Color.fromARGB(255, 237, 98, 96),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -288,16 +263,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _connectClick() {
-    ///Stop right here if user not select a vpn
-    if (_selectedVpn == null) return;
+    // ///Stop right here if user not select a vpn
+    // if (_selectedVpn == null) return;
 
-    if (_controller.vpnState.value == VpnEngine.vpnDisconnected) {
-      ///Start if stage is disconnected
-      VpnEngine.startVpn(_selectedVpn!);
-    } else {
-      ///Stop if stage is "not" disconnected
-      VpnEngine.stopVpn();
-    }
+    // if (_controller.vpnState.value == VpnEngine.vpnDisconnected) {
+    //   ///Start if stage is disconnected
+    //   VpnEngine.startVpn(_selectedVpn!);
+    // } else {
+    //   ///Stop if stage is "not" disconnected
+    //   VpnEngine.stopVpn();
+    // }
   }
 
   Widget _vpnButton() => Semantics(
@@ -354,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 58,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
-              color: isDark ? Colors.black87 : Colors.orange.shade400,
+              color: Colors.orange.shade400,
             ),
             child: Center(
               child: Padding(
