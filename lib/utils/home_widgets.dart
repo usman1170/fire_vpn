@@ -46,7 +46,7 @@ class LowerWidgets extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black54),
+                    color: Theme.of(context).lightColor),
               ),
             ],
           ),
@@ -60,7 +60,7 @@ class LowerWidgets extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              color: Theme.of(context).lightColor,
             ),
           ),
         ],
@@ -112,7 +112,7 @@ class UpperWidgets extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black54),
+                    color: Theme.of(context).lightColor),
               ),
               SizedBox(
                 height: 6,
@@ -126,7 +126,7 @@ class UpperWidgets extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black87,
+                    color: Theme.of(context).lightColor,
                   ),
                 ),
               ),

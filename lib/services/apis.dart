@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:csv/csv.dart';
 import 'package:http/http.dart' as http;
+import 'package:vpn_basic_project/hive_data/hive_data.dart';
 import 'package:vpn_basic_project/models/vpn_model.dart';
 
 class Apis {
@@ -28,6 +29,9 @@ class Apis {
       log("Error is = $e");
     }
     vpnList.shuffle();
+    if (vpnList.isNotEmpty) {
+      HiveData.vpnList = vpnList;
+    }
     return vpnList;
   }
 }

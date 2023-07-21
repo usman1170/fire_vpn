@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:vpn_basic_project/main.dart';
 
 class CountDownWidget extends StatefulWidget {
   final bool startTimer;
@@ -40,7 +41,7 @@ class _CountDownWidgetState extends State<CountDownWidget> {
       child: Text(
         "$hours:$minuts:$seconds",
         style: TextStyle(
-          color: Colors.orange.shade800,
+          color: Theme.of(context).countDownColor,
           fontWeight: FontWeight.w600,
           fontSize: 30,
         ),

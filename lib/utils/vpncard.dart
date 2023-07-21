@@ -3,7 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/controllers/home_controller.dart';
+import 'package:vpn_basic_project/hive_data/hive_data.dart';
+import 'package:vpn_basic_project/main.dart';
 import 'package:vpn_basic_project/models/vpn_model.dart';
+import 'package:vpn_basic_project/services/vpn_engine.dart';
 
 class VPNCard extends StatelessWidget {
   const VPNCard({super.key, required this.vpn});
@@ -17,7 +20,16 @@ class VPNCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           controller.vpn.value = vpn;
+          HiveData.vpn = vpn;
           Get.back();
+          if (controller.vpnState.value == VpnEngine.vpnConnected) {
+            VpnEngine.stopVpn();
+            Future.delayed(Duration(seconds: 2), () {
+              controller.connectClick();
+            });
+          } else {
+            controller.connectClick();
+          }
         },
         borderRadius: BorderRadius.circular(20),
         child: Padding(
@@ -30,7 +42,7 @@ class VPNCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: Colors.black45,
+                  color: Theme.of(context).btnColor,
                 ),
               ),
               child: ClipRRect(
@@ -43,13 +55,18 @@ class VPNCard extends StatelessWidget {
               vpn.countrylong,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
+              style: TextStyle(color: Theme.of(context).lightColor),
             ),
             subtitle: Text(
               formatBytes(vpn.speed),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
+              style: TextStyle(color: Theme.of(context).lightColor),
             ),
-            trailing: Text("${vpn.numvpnsessions.toString()} Persons"),
+            trailing: Text(
+              "${vpn.numvpnsessions.toString()} Persons",
+              style: TextStyle(color: Theme.of(context).lightColor),
+            ),
           ),
         ),
       ),

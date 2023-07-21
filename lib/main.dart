@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
+import 'package:vpn_basic_project/hive_data/hive_data.dart';
 import 'package:vpn_basic_project/routes/routes.dart';
 import 'package:vpn_basic_project/screens/splash.dart';
 import 'screens/home_screen.dart';
 
 // for size of device
 late Size mq;
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await HiveData.initialize();
   // for full screen of splash screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   // to set oreantations of device
@@ -29,9 +31,27 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
+      themeMode: ThemeMode.light,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.orange,
+      ),
       debugShowCheckedModeBanner: false,
       routes: {homeroute: (context) => HomeScreen()},
       home: SplashScreen(),
     );
   }
+}
+
+extension appTheme on ThemeData {
+  Color get lightColor => Get.isDarkMode ? Colors.white70 : Colors.black87;
+
+  Color get bgColor =>
+      Get.isDarkMode ? Color.fromARGB(255, 42, 43, 43) : Colors.grey.shade200;
+  Color get countDownColor =>
+      Get.isDarkMode ? Colors.white : Colors.orange.shade800;
+  Color get mainColor => Get.isDarkMode
+      ? Colors.orange.shade400.withOpacity(.4)
+      : Colors.orange.shade400;
+  Color get btnColor => Get.isDarkMode ? Colors.orange : Colors.orange.shade400;
 }

@@ -1,17 +1,20 @@
+// ignore_for_file: unnecessary_null_comparison
+
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-
-import 'package:flutter/services.dart' show rootBundle;
+// import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vpn_basic_project/controllers/home_controller.dart';
 import 'package:vpn_basic_project/main.dart';
+import 'package:vpn_basic_project/models/vpn_config.dart';
 import 'package:vpn_basic_project/screens/locations_screen.dart';
 import 'package:vpn_basic_project/utils/countdown.dart';
 import 'package:vpn_basic_project/utils/home_widgets.dart';
 
-import '../models/vpn_config.dart';
 import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
 
@@ -33,15 +36,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     return Obx(
       () => Scaffold(
-          backgroundColor: Colors.grey.shade100,
-          // appBar: AppBar(title: Text('OpenVPN Demo')),
+          backgroundColor: Theme.of(context).bgColor,
           body: Column(mainAxisSize: MainAxisSize.min, children: [
             Container(
               padding: EdgeInsets.all(16),
               height: mq.height * .45,
               width: mq.width,
               decoration: BoxDecoration(
-                color: Colors.orange.shade400,
+                color: Theme.of(context).mainColor,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(170),
                   bottomRight: Radius.circular(170),
@@ -72,7 +74,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.changeThemeMode(
+                              Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                            );
+                          },
                           icon: Icon(
                             Icons.brightness_medium_outlined,
                             color: Colors.grey.shade100,
@@ -92,7 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   TextButton(
                     style: TextButton.styleFrom(
                         shape: StadiumBorder(),
-                        backgroundColor: Colors.grey.shade100,
+                        backgroundColor:
+                            _controller.vpnState.value == VpnEngine.vpnConnected
+                                ? Colors.green.shade400.withOpacity(.8)
+                                : Colors.grey.shade100,
                         padding: EdgeInsets.symmetric(horizontal: 16)),
                     child: Text(
                       _controller.vpnState.value == VpnEngine.vpnDisconnected
@@ -101,18 +110,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               .replaceAll("_", " ")
                               .toUpperCase(),
                       style: TextStyle(
-                        color: Colors.orange.shade600,
+                        color:
+                            _controller.vpnState.value == VpnEngine.vpnConnected
+                                ? Colors.white
+                                : Colors.orange.shade600,
                       ),
                     ),
-                    onPressed: () {
-                      _controller.startTimer.value =
-                          !_controller.startTimer.value;
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
             ),
-
             SizedBox(
               height: 15,
             ),
@@ -122,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    if (_controller.startTimer.value == true)
+                    if (_controller.vpnState.value == VpnEngine.vpnConnected)
                       Container(
                         margin: EdgeInsets.only(bottom: 10),
                         height: 40,
@@ -135,10 +143,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
                       child: CountDownWidget(
-                        startTimer: _controller.startTimer.value,
+                        startTimer: _controller.vpnState.value ==
+                            VpnEngine.vpnConnected,
                       ),
                     ),
-                    if (_controller.startTimer.value == true)
+                    if (_controller.vpnState.value == VpnEngine.vpnConnected)
                       Container(
                         margin: EdgeInsets.only(bottom: 10),
                         height: 40,
@@ -226,86 +235,43 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-
-            // StreamBuilder<VpnStatus?>(
-            //   initialData: VpnStatus(),
-            //   stream: VpnEngine.vpnStatusSnapshot(),
-            //   builder: (context, snapshot) => Text(
-            //     "${snapshot.data?.byteIn ?? ""}, ${snapshot.data?.byteOut ?? ""}",
-            //     textAlign: TextAlign.center,
-            //   ),
-            // ),
-
-            // //sample vpn list
-            // Column(
-            //     children: _listVpn
-            //         .map(
-            //           (e) => ListTile(
-            //             title: Text(e.country),
-            //             leading: SizedBox(
-            //               height: 20,
-            //               width: 20,
-            //               child: Center(
-            //                   child: _selectedVpn == e
-            //                       ? CircleAvatar(backgroundColor: Colors.green)
-            //                       : CircleAvatar(backgroundColor: Colors.grey)),
-            //             ),
-            //             onTap: () {
-            //               log("${e.country} is selected");
-            //               setState(() => _selectedVpn = e);
-            //             },
-            //           ),
-            //         )
-            //         .toList())
           ]),
           bottomNavigationBar: _bottomSheet()),
     );
   }
 
-  void _connectClick() {
-    // ///Stop right here if user not select a vpn
-    // if (_selectedVpn == null) return;
-
-    // if (_controller.vpnState.value == VpnEngine.vpnDisconnected) {
-    //   ///Start if stage is disconnected
-    //   VpnEngine.startVpn(_selectedVpn!);
-    // } else {
-    //   ///Stop if stage is "not" disconnected
-    //   VpnEngine.stopVpn();
-    // }
-  }
-
-  Widget _vpnButton() => Semantics(
-        button: true,
-        child: InkWell(
-          onTap: () {
-            _connectClick();
-            _controller.startTimer.value = !_controller.startTimer.value;
-          },
-          child: Container(
-            padding: EdgeInsets.all(14.5),
-            decoration: BoxDecoration(
-              color: _controller.getbuttonColor.withOpacity(.6),
-              shape: BoxShape.circle,
-            ),
+  Widget _vpnButton() => Obx(
+        () => Semantics(
+          button: true,
+          child: InkWell(
+            onTap: () {
+              _controller.connectClick();
+            },
             child: Container(
-              padding: EdgeInsets.all(13),
+              padding: EdgeInsets.all(14.5),
               decoration: BoxDecoration(
-                color: Colors.orange.shade200.withOpacity(.9),
+                color: _controller.getbuttonColor.withOpacity(.6),
                 shape: BoxShape.circle,
               ),
               child: Container(
-                height: mq.height * .13,
-                width: mq.height * .13,
+                padding: EdgeInsets.all(13),
                 decoration: BoxDecoration(
-                  color: Colors.orange.shade500,
+                  color: Colors.orange.shade200.withOpacity(.9),
                   shape: BoxShape.circle,
                 ),
-                child: Center(
-                  child: Icon(
-                    CupertinoIcons.power,
-                    color: Colors.grey.shade200,
-                    size: 32,
+                child: Container(
+                  height: mq.height * .13,
+                  width: mq.height * .13,
+                  decoration: BoxDecoration(
+                    color: Colors.orange.shade500,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      CupertinoIcons.power,
+                      color: Colors.grey.shade200,
+                      size: 32,
+                    ),
                   ),
                 ),
               ),
@@ -329,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 58,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
-              color: Colors.orange.shade400,
+              color: Theme.of(context).mainColor,
             ),
             child: Center(
               child: Padding(

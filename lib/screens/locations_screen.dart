@@ -13,10 +13,22 @@ class LocationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
-
-    _controller.getVpnData();
+    if (_controller.list.isEmpty) _controller.getVpnData();
     return Obx(
       () => Scaffold(
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 12, right: 12),
+          child: FloatingActionButton(
+            backgroundColor: Theme.of(context).btnColor,
+            onPressed: () {
+              _controller.getVpnData();
+            },
+            child: Icon(
+              Icons.refresh,
+              color: Colors.white,
+            ),
+          ),
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -24,7 +36,7 @@ class LocationsScreen extends StatelessWidget {
               padding: EdgeInsets.all(12),
               height: mq.height * .14,
               decoration: BoxDecoration(
-                color: Colors.orange.shade400,
+                color: Theme.of(context).mainColor,
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(50),
                 ),
@@ -65,16 +77,26 @@ class LocationsScreen extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Container(
-                        height: 45,
-                        width: 45,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.brightness_medium_sharp,
-                            color: Colors.grey.shade100,
+                      Semantics(
+                        button: true,
+                        child: InkWell(
+                          onTap: () {
+                            Get.changeThemeMode(
+                              Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                            );
+                          },
+                          child: Container(
+                            height: 45,
+                            width: 45,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.brightness_medium_sharp,
+                                color: Colors.grey.shade100,
+                              ),
+                            ),
                           ),
                         ),
                       ),
