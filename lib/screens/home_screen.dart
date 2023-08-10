@@ -1,20 +1,13 @@
 // ignore_for_file: unnecessary_null_comparison
-
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vpn_basic_project/controllers/home_controller.dart';
 import 'package:vpn_basic_project/main.dart';
-import 'package:vpn_basic_project/models/vpn_config.dart';
 import 'package:vpn_basic_project/screens/locations_screen.dart';
 import 'package:vpn_basic_project/utils/countdown.dart';
 import 'package:vpn_basic_project/utils/home_widgets.dart';
-
 import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
 

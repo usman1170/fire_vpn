@@ -25,14 +25,11 @@ class HomeController extends GetxController {
         password: "vpn",
         config: config,
       );
-
-      ///Start if stage is disconnected
       VpnEngine.startVpn(vpnConfig);
       Future.delayed(Duration(seconds: 2), () {
         startTimer.value = true;
       });
     } else {
-      ///Stop if stage is "not" disconnected
       VpnEngine.stopVpn();
       startTimer.value = false;
     }

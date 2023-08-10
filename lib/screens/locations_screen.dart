@@ -109,7 +109,7 @@ class LocationsScreen extends StatelessWidget {
               child: _controller.isLoading.value
                   ? _loadingAnimation()
                   : _controller.list.isEmpty
-                      ? _noVpn()
+                      ? _noVpnfound()
                       : _vpnData(),
             ),
           ],
@@ -134,7 +134,7 @@ class LocationsScreen extends StatelessWidget {
         ),
       );
 
-  _noVpn() => Center(
+  _noVpnfound() => Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

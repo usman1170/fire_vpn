@@ -13,7 +13,6 @@ Future<void> main() async {
   await HiveData.initialize();
   // for full screen of splash screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-  // to set oreantations of device
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
       .then((value) {
