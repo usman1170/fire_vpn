@@ -78,20 +78,36 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
       bottomSheet: Container(
-        margin: EdgeInsets.only(left: 16, right: 16, bottom: 40),
+        margin: EdgeInsets.only(left: 16, right: 16, bottom: 45),
         height: 55,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             color: Colors.orange.shade100.withOpacity(.6),
             borderRadius: BorderRadius.circular(40)),
         child: Center(
-          child: Text(
-            "Powered by Usman Ghani",
-            style: TextStyle(
-              color: Colors.orange.shade800,
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Powered by",
+                style: TextStyle(
+                  color: Colors.orange.shade700,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              SizedBox(
+                width: 6,
+              ),
+              Text(
+                "SyncX",
+                style: TextStyle(
+                  color: Colors.orange.shade900,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
         ),
       ),
