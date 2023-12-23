@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/hive_data/hive_data.dart';
 import 'package:vpn_basic_project/models/vpn_model.dart';
 import 'package:vpn_basic_project/services/vpn_engine.dart';
-
 import '../models/vpn_config.dart';
 
 class HomeController extends GetxController {
@@ -41,6 +39,12 @@ class HomeController extends GetxController {
         return Colors.orange.shade200;
       case VpnEngine.vpnConnected:
         return Colors.green.shade400;
+      case VpnEngine.vpnWaitConnection:
+        return Colors.red.shade400;
+      case VpnEngine.vpnConnecting:
+        return Colors.red.shade400;
+      case VpnEngine.vpnAuthenticating:
+        return Colors.red.shade400;
       default:
         return Colors.orange.shade200;
     }

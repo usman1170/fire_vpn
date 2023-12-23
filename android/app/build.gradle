@@ -32,7 +32,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.openVpnDemo"
+        applicationId "com.syncx.firevpn"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()

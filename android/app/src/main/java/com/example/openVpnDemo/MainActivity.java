@@ -1,4 +1,4 @@
-package com.example.openVpnDemo;
+package com.syncx.firevpn;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

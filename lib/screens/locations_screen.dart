@@ -9,6 +9,7 @@ class LocationsScreen extends StatelessWidget {
   LocationsScreen({super.key});
 
   final _controller = LocationController();
+  // final a = 0;
 
   @override
   Widget build(BuildContext context) {
