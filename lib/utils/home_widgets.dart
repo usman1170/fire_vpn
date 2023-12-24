@@ -20,7 +20,7 @@ class LowerWidgets extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10),
       height: mq.height * .12,
-      width: 150,
+      width: mq.width * .42,
       decoration: BoxDecoration(
           color: Colors.orange.shade400.withOpacity(.4),
           borderRadius: BorderRadius.circular(20)),

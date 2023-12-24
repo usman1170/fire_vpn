@@ -100,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: 6,
               ),
               Text(
-                "SyncX",
+                "SyncEX",
                 style: TextStyle(
                   color: Colors.orange.shade900,
                   fontSize: 16,

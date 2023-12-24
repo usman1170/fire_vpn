@@ -7,6 +7,7 @@ import 'package:vpn_basic_project/controllers/home_controller.dart';
 import 'package:vpn_basic_project/main.dart';
 import 'package:vpn_basic_project/screens/locations_screen.dart';
 import 'package:vpn_basic_project/utils/countdown.dart';
+import 'package:vpn_basic_project/utils/dialogs.dart';
 import 'package:vpn_basic_project/utils/home_widgets.dart';
 import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
@@ -52,7 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Dialogs().errorDialog(
+                              context,
+                              "Alert",
+                              "This will modify in next update of app. Thanks",
+                            );
+                          },
                           icon: Icon(
                             Icons.info_outline,
                             color: Colors.grey.shade100,
