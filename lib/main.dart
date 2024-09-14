@@ -6,12 +6,10 @@ import 'package:vpn_basic_project/routes/routes.dart';
 import 'package:vpn_basic_project/screens/splash.dart';
 import 'screens/home_screen.dart';
 
-// for size of device
 late Size mq;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveData.initialize();
-  // for full screen of splash screen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
@@ -36,7 +34,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.orange,
       ),
       debugShowCheckedModeBanner: false,
-      routes: {homeroute: (context) => HomeScreen()},
+      routes: {
+        homeroute: (context) => HomeScreen(),
+      },
       home: SplashScreen(),
     );
   }

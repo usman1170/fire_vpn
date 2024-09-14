@@ -259,7 +259,16 @@ class _HomeScreenState extends State<HomeScreen> {
           button: true,
           child: InkWell(
             onTap: () {
-              _controller.connectClick();
+              print(_controller.vpn.value?.countrylong);
+              if (_controller.vpn.value?.countrylong != "") {
+                _controller.connectClick();
+              } else {
+                Dialogs().errorDialog(
+                  context,
+                  "Alert",
+                  "Please select any server",
+                );
+              }
             },
             child: Container(
               padding: EdgeInsets.all(14.5),
@@ -329,7 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 12,
                         ),
                         Text(
-                          "Chnage Location",
+                          "Chnage Server",
                           style: TextStyle(
                             color: Colors.grey.shade200,
                             fontSize: 16,
